@@ -25,27 +25,15 @@ class AuthViewModel extends ChangeNotifier {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => const Mainpage()));
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Invalid email or password'),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-          duration: Duration(seconds: 3),
-        ),
-      );
+          showTopSnackBar(context, 'Invalid email or password');
+
     }
   }
 
   void signup(String email, String password, BuildContext context) {
     if (_dummyUsers.containsKey(email)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Email already registered'),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-          duration: Duration(seconds: 3),
-        ),
-      );
+                showTopSnackBar(context, 'Email already registered');
+
     } else if (email.isNotEmpty && password.length >= 6) {
       _dummyUsers[email] = password;
       _user = UserModel(
@@ -62,11 +50,53 @@ class AuthViewModel extends ChangeNotifier {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => const Mainpage()));
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Invalid email or password'),
-        ),
-      );
+          showTopSnackBar(context, 'Invalid email or password');
+
+      
     }
   }
+  
+}
+void showTopSnackBar(BuildContext context, String message) {
+  final overlay = Overlay.of(context);
+  late OverlayEntry overlayEntry; 
+
+  overlayEntry = OverlayEntry(
+    builder: (context) => Positioned(
+      top: MediaQuery.of(context).padding.top + kToolbarHeight + 10,
+      left: 16,
+      right: 16,
+      child: Dismissible(
+        key: UniqueKey(),
+        direction: DismissDirection.up,
+        onDismissed: (_) => overlayEntry.remove(),
+        child: Material(
+          elevation: 8,
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+            decoration: BoxDecoration(
+             
+             
+             
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              message,
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  overlay.insert(overlayEntry);
+
+  // Auto-remove after 3 seconds
+  Future.delayed(const Duration(seconds: 3), () {
+    if (overlayEntry.mounted) overlayEntry.remove();
+  });
 }

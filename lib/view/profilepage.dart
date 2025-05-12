@@ -210,7 +210,7 @@ class _ProfilePageState extends State<ProfilePage>
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: Row(children: [
-                        smallbuttons(context, "Open to", Colors.blue,
+                        smallbuttons(context, "Open to", Color(0xff0079fe),
                             Colors.white, false),
                         const SizedBox(
                           width: 10,
@@ -254,7 +254,7 @@ class _ProfilePageState extends State<ProfilePage>
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Container(
-                        color: const Color(0xFFE5EEF7),
+                        color: const Color(0xffdae5ef),
                         padding: const EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -400,7 +400,7 @@ Widget workcontainer() {
     width: 300,
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: const Color.fromARGB(255, 192, 187, 170)),
+        color: const Color(0xffe7e5df)),
     child: Padding(
       padding: const EdgeInsets.all(20.0),
       child: Row(
